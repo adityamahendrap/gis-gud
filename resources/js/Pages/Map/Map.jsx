@@ -3,7 +3,7 @@ import "leaflet/dist/leaflet.css";
 import { useGlobalState } from "@/State/Global";
 
 const Map = () => {
-  const { points, updatePoint } = useGlobalState();
+  const { points, updatePoint, allowDragPointId } = useGlobalState();
 
   const handleDragEnd = (e, pointId) => {
     const { lat, lng } = e.target.getLatLng();
@@ -28,7 +28,7 @@ const Map = () => {
         <Marker
           position={[point.lat, point.lng]}
           key={point.id}
-          draggable={true}
+          draggable={allowDragPointId === point.id}
           eventHandlers={{ dragend: (e) => handleDragEnd(e, point.id) }}
         >
           <Popup>

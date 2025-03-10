@@ -28,6 +28,14 @@ export const GlobalStateProvider = ({ children }) => {
     points[0].lat,
     points[0].lng,
   ]);
+  const [allowDragPointId, setAllowDragPointId] = useState(null);
+
+  const allowDrag = (pointId) => {
+    setAllowDragPointId(pointId);
+  }
+  const resetAllowDrag = () => {
+    setAllowDragPointId(null);
+  }
 
   const [lines, setLines] = useState([]);
   const [polygons, setPolygons] = useState([]);
@@ -77,6 +85,10 @@ export const GlobalStateProvider = ({ children }) => {
         updateLatitude,
         longitude,
         updateLongitude,
+        centerPoint,
+        allowDrag,
+        resetAllowDrag,
+        allowDragPointId,
       }}
     >
       {children}

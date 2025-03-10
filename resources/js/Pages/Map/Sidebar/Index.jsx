@@ -44,8 +44,9 @@ const Sidebar = () => {
   return (
     <aside
       id="default-sidebar"
-      className="fixed top-0 left-0 z-40 w-64 h-screen px-3 py-4 transition-transform -translate-x-full sm:translate-x-0"
+      className="fixed top-0 left-0 z-40 w-64 h-screen px-3 py-4 transition-transform -translate-x-full sm:translate-x-0 overflow-y-scroll"
       aria-label="Sidebar"
+      style={{ scrollbarWidth: "none" }}
     >
       <div>
         <div className="h-full overflow-y-auto bg-white dark:bg-gray-800">

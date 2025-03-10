@@ -9,7 +9,6 @@ export const GlobalStateProvider = ({ children }) => {
   const updateLongitude = (longitude) => {
     setLongitude(longitude);
   };
-
   const updateLatitude = (latitude) => {
     setLatitude(latitude);
   };
@@ -32,13 +31,14 @@ export const GlobalStateProvider = ({ children }) => {
 
   const allowDrag = (pointId) => {
     setAllowDragPointId(pointId);
-  }
+  };
   const resetAllowDrag = () => {
     setAllowDragPointId(null);
-  }
+  };
 
   const [lines, setLines] = useState([]);
   const [polygons, setPolygons] = useState([]);
+  const [zoom, setZoom] = useState(3);
 
   const changeMenu = (menu) => {
     setActiveMenu(menu);
@@ -67,8 +67,15 @@ export const GlobalStateProvider = ({ children }) => {
     console.log("Updated Point: ", { id, lat, lng, title, description });
   };
 
-  const updateMapCenterPoint = (lat, lng) => {
-    setCenterPoint([point.lat, point.lng]);
+  const moveFocusPoint = (pointId) => {
+    const point = points.find((p) => p.id === pointId);
+    if (point) {
+      setCenterPoint([point.lat, point.lng]);
+      setZoom(15);
+      console.log("Focus Point: ", point);
+      console.log("Center Point: ", centerPoint);
+      console.log("Zoom: ", zoom);
+    }
   };
 
   return (
@@ -79,7 +86,6 @@ export const GlobalStateProvider = ({ children }) => {
         points,
         addPoint,
         deleteLastPoint,
-        updateMapCenterPoint,
         updatePoint,
         latitude,
         updateLatitude,
@@ -89,6 +95,8 @@ export const GlobalStateProvider = ({ children }) => {
         allowDrag,
         resetAllowDrag,
         allowDragPointId,
+        zoom,
+        moveFocusPoint,
       }}
     >
       {children}

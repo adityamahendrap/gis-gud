@@ -24,12 +24,12 @@ const AddButton = ({ isActive, setIsActive }) => {
 const Input = ({ label, type, value, onChange }) => {
   return (
     <div className="mb-3">
-      <label class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-white">
+      <label className="block mb-0.5 text-sm font-medium text-gray-900 dark:text-white">
         {label}
       </label>
       <input
         type={type}
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         placeholder=""
         required
         value={value}
@@ -39,13 +39,16 @@ const Input = ({ label, type, value, onChange }) => {
   );
 };
 
-const PointCard = ({ point }) => {
+const PointCard = ({ point, clicked }) => {
   return (
-    <div class="block max-w-sm py-2 px-3 bg-white border border-gray-200 cursor-pointer rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-      <h5 class=" text-sm font-bold tracking-tight text-gray-900 dark:text-white">
+    <div
+      className="block max-w-sm py-2 px-3 bg-white border border-gray-200 cursor-pointer rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+      onClick={() => clicked(point.id)}
+    >
+      <h5 className=" text-sm font-bold tracking-tight text-gray-900 dark:text-white">
         {point.title === "" ? "Untitled" : point.title}
       </h5>
-      <p class="font-thin text-sm line-clamp-1 text-gray-700 dark:text-gray-400">
+      <p className="font-thin text-sm line-clamp-1 text-gray-700 dark:text-gray-400">
         {point.description === "" ? "No description" : point.description}
       </p>
     </div>
@@ -64,6 +67,7 @@ const Point = () => {
     updateLongitude,
     allowDrag,
     resetAllowDrag,
+    moveFocusPoint,
   } = useGlobalState();
 
   const [showContent, setShowContent] = useState(true);
@@ -161,17 +165,17 @@ const Point = () => {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
-              <div class="mb-3">
+              <div className="mb-3">
                 <label
                   for="description"
-                  class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-0.5 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Description
                 </label>
                 <textarea
                   type="text"
                   id="description"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder=""
                   required
                   value={description}
@@ -180,7 +184,7 @@ const Point = () => {
               </div>
               <button
                 type="button"
-                class="mt-1 text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                className="mt-1 text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
                 onClick={savePoint}
               >
                 Save
@@ -190,7 +194,9 @@ const Point = () => {
 
           <div className="mt-4 flex flex-col gap-2">
             {points.map((point) => (
-              <PointCard point={point} />
+              <PointCard point={point}
+                clicked={(pointId) => moveFocusPoint(pointId)}
+              />
             ))}
           </div>
         </div>

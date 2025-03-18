@@ -1,8 +1,7 @@
 import { Badge, ChevronsLeftRightEllipsis, MapPin } from "lucide-react";
 import { useState } from "react";
-import { useGlobalState } from "@/State/Global";
 import AccordionHead from "@/Components/Menu/AccordionHead";
-import Point from "../Point/Index";
+import { Link } from "@inertiajs/react";
 
 const Title = () => {
   return (
@@ -15,27 +14,24 @@ const Title = () => {
   );
 };
 
-const MenuButton = ({ name, icon }) => {
-  const { activeMenu, changeMenu } = useGlobalState();
-
+const MenuButton = ({ name, icon, href, activeMenu }) => {
   return (
-    <button
+    <Link
+      href={href}
       className={`flex flex-col gap-2 p-4 rounded-lg shadow-md  ${
         activeMenu === name
           ? "border-2 border-blue-500 bg-blue-100"
           : "border border-gray-200 bg-gray-200 hover:bg-gray-100"
       }`}
-      onClick={() => changeMenu(name)}
     >
       {icon}
       <p className="font-medium text-lg text-left">{name}</p>
-    </button>
+    </Link>
   );
 };
 
-const Sidebar = () => {
+const Sidebar = ({ content, activeMenu }) => {
   const [showMenuOptions, setShowMenuOptions] = useState(true);
-  const { activeMenu } = useGlobalState();
 
   const toggleMenuOptions = () => {
     setShowMenuOptions(!showMenuOptions);
@@ -58,13 +54,26 @@ const Sidebar = () => {
           />
           {showMenuOptions && (
             <div className="grid grid-cols-2 gap-4 mb-4">
-              <MenuButton name="Point" icon={<MapPin />} />
-              <MenuButton name="Line" icon={<ChevronsLeftRightEllipsis />} />
-              <MenuButton name="Polygon" icon={<Badge />} />
+              <MenuButton
+                name="Point"
+                icon={<MapPin />}
+                href="/map/points"
+                activeMenu={activeMenu}
+              />
+              <MenuButton
+                name="Line"
+                icon={<ChevronsLeftRightEllipsis />}
+                activeMenu={activeMenu}
+              />
+              <MenuButton
+                name="Polygon"
+                icon={<Badge />}
+                activeMenu={activeMenu}
+              />
             </div>
           )}
+          <div>{content}</div>
         </div>
-        <div>{activeMenu === "Point" && <Point />}</div>
       </div>
     </aside>
   );

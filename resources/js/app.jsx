@@ -3,7 +3,7 @@ import "./bootstrap";
 import { createInertiaApp } from "@inertiajs/react";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { createRoot } from "react-dom/client";
-import { GlobalStateProvider } from "./State/Global";
+import { GlobalStateProvider } from "./Pages/V2/State/Global";
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 

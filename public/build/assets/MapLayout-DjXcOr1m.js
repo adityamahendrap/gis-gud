@@ -1,0 +1,1 @@
+import{K as o,j as r}from"./app-BcsoSToc.js";import a from"./Map-B8vXc-Fz.js";import{S as i}from"./Sidebar-B2yxvyIN.js";const d=({children:e,points:n,state:s})=>{if(typeof window>"u")return null;const{name:t}=o().props;return r.jsxs(r.Fragment,{children:[r.jsx(i,{content:e,activeMenu:t}),r.jsx("div",{className:"sm:ml-64",children:r.jsx(a,{points:n,state:s})})]})};export{d as M};

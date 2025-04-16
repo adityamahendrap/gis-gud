@@ -41,10 +41,15 @@ const PointCard = ({ point, clicked }) => {
 };
 
 const Point = () => {
-  const { points } = usePage().props;
+  let { points } = usePage().props;
   const { moveFocusPoint } = useGlobalState();
-
   const [showContent, setShowContent] = useState(true);
+
+  if (!Array.isArray(points)) {
+    points = Object.values(points);
+  }
+
+  console.log("points:", points);
 
   return (
     <MapLayout points={points}>

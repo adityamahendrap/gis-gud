@@ -1,7 +1,27 @@
-import { MapContainer, TileLayer, Marker, Popup, useMap, Polyline } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMap,
+  Polyline,
+} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect } from "react";
 import { useGlobalState } from "./State/Global";
+import L from "leaflet";
+
+import icon from "leaflet/dist/images/marker-icon.png";
+import iconShadow from "leaflet/dist/images/marker-shadow.png";
+
+let DefaultIcon = L.icon({
+  iconUrl: icon,
+  shadowUrl: iconShadow,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+});
+
+L.Marker.prototype.options.icon = DefaultIcon;
 
 const MapUpdater = ({ center, zoom }) => {
   const map = useMap();
@@ -18,7 +38,7 @@ const MapUpdater = ({ center, zoom }) => {
   return null;
 };
 
-const Map = ({ points, state }) => {
+const Map = ({ points = [], state }) => {
   const {
     tempLongitude,
     tempLatitude,
@@ -34,6 +54,12 @@ const Map = ({ points, state }) => {
     setTempLongitude(lng);
     console.log("New position:", lat, lng);
   };
+
+  if (!Array.isArray(points)) {
+    points = Object.values(points);
+  }
+
+  console.log("points:", points);
 
   return (
     <MapContainer center={center} zoom={zoom} style={{ height: "100vh" }}>
@@ -51,20 +77,21 @@ const Map = ({ points, state }) => {
         />
       )}
 
-      {points.map((point) => (
-        <Marker
-          position={[point.latitude, point.longitude]}
-          key={point.id}
-          eventHandlers={{ dragend: (e) => handleDragEnd(e, point.id) }}
-        >
-          <Popup>
-            <div>
-              <h3 className="font-bold">{point.name}</h3>
-              <span>{point.description}</span>
-            </div>
-          </Popup>
-        </Marker>
-      ))}
+      {Array.isArray(points) &&
+        points.map((point) => (
+          <Marker
+            position={[point.latitude, point.longitude]}
+            key={point.id}
+            eventHandlers={{ dragend: (e) => handleDragEnd(e, point.id) }}
+          >
+            <Popup>
+              <div>
+                <h3 className="font-bold">{point.name}</h3>
+                <span>{point.description}</span>
+              </div>
+            </Popup>
+          </Marker>
+        ))}
       {/* Temp marker */}
       {state == "add_point" && (
         <Marker
